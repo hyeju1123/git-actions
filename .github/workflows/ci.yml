@@ -1,0 +1,23 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Example CI      # workflow의 이름 설정
+
+on:     # workflow가 실행되는 이벤트 설정
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:    # job(workflow의 작업 단위)의 이름을 'test'로 설정
+    runs-on: ubuntu-latest
+    steps:    # job에서의 각각의 step
+    - uses: actions/checkout@v3   # checkout이라는 action을 사용
+    - name: Setup node.js 14.x  # 각 action의 이름도 지정할 수 있음
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
